@@ -151,7 +151,7 @@ with tab2:
 with tab1:
   with col2:
     st.write("Masking policy options")
-    c2tab2,c2tab1 = st.tabs(["Create & Apply Mask","Remove & Drop Mask"])
+    c2tab2,c2tab1 = st.tabs(["Remove & Drop Mask","Create & Apply Mask"])
     with c2tab2:
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
@@ -190,13 +190,11 @@ with tab1:
           sch_poli = allpolicy_tab.loc[allpolicy_tab['SCHEMA']==pschema]
           policy = st.selectbox('Choose Masking Policy:',list(set(sch_poli['POLICY_NAME'])))
           sc_tb_policy = sch_poli.loc[sch_poli['POLICY_NAME']==policy]
-          ed = st.radio('',['Remove Mask','Drop Mask'])
-          if ed=='Remove Mask':
+          if st.button('Remove Mask on columns'):
             for i,row in sc_tb_policy.iterrows():
               sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
-            
-          else:
-            pass
+             
+          
             #cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,<>,<>)
   with col1:
     if sc_tb.shape[0]!=0 and alltags.shape[0]!=0:
