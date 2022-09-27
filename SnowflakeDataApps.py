@@ -191,11 +191,23 @@ with tab1:
           policy = st.selectbox('Choose Masking Policy:',list(set(sch_poli['POLICY_NAME'])))
           sc_tb_policy = sch_poli.loc[sch_poli['POLICY_NAME']==policy]
           if st.button('Remove Mask on columns'):
+            removemaskon = []
             for i,row in sc_tb_policy.iterrows():
               sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
-             
-          
-            #cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,<>,<>)
+              if sctab==True:
+                removemaskon.append({'TABLE_NAME':row['TABLE_NAME'],'COLUMN_NAME':row['COLUMN_NAME']})
+            if st.button('Remove'):
+              for x in removemaskon:
+                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,x['TABLE_NAME'],x['COLUMN_NAME'])
+          if st.button("Remove & Drop Mask"):
+            st.warning('This option will Remove the mask on all columns it was applied and drop the mask', icon="⚠️")   
+            if st.button("Yes,Drop Mask"):                
+              for i,row in sc_tb_policy.iterrows():     
+                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,row['TABLE_NAME'],row['COLUMN_NAME'])
+              cur.execute("Use database {};".format(DB))
+              cur.execute("Use Schema {};".format(pschema)) 
+              cur.execute("Drop Masking Policy {};".format(policy))
+              st.info("Successfully removed mask and dropped the Mask {}".format(policy), icon="ℹ️")                 
   with col1:
     if sc_tb.shape[0]!=0 and alltags.shape[0]!=0:
       if allpolicy_tab.shape[0]!=0:
