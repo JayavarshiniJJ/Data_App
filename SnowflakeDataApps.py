@@ -198,7 +198,7 @@ with tab1:
                 removemaskon.append({'TABLE_NAME':row['TABLE_NAME'],'COLUMN_NAME':row['COLUMN_NAME']})
             if st.button('Remove'):
               for x in removemaskon:
-                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,x['TABLE_NAME'],x['COLUMN_NAME']))
+                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB,pschema,x['TABLE_NAME'],x['COLUMN_NAME']))
           else:                  
             st.warning('This option will Remove the mask on all columns it was applied and drop the mask', icon="⚠️")   
             if st.button('Yes,Drop Mask'):                
