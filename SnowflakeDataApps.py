@@ -193,7 +193,7 @@ with tab1:
             pass
           else:
             pass
-            cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,<>,<>)
+            #cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,<>,<>)
   with col1:
     if sc_tb.shape[0]!=0 and alltags.shape[0]!=0:
       if allpolicy_tab.shape[0]!=0:
