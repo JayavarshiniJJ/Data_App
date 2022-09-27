@@ -37,7 +37,7 @@ sc_tb = pd.read_sql("select TABLE_SCHEMA AS SCHEMA,TABLE_NAME from {}.informatio
 tab1, tab2 = st.tabs(["Detailed view",  "overview"])
 ####col1--selecting schemas, classifying and if classified---removing the tags option####
 with tab1:
-  col1, col2 = st.columns([8,2])
+  col1, col2 = st.columns([7,2])
   with col1:
 ####selecting schemas####
     select = ['All Schemas','Select Schemas']
@@ -151,8 +151,8 @@ with tab2:
 with tab1:
   with col2:
     st.write("Masking policy options")
-    c2tab1,c2tab2 = st.tabs(["Create & Apply Mask","Remove & Drop Mask"])
-    with c2tab1:
+    c2tab2,c2tab1 = st.tabs(["Create & Apply Mask","Remove & Drop Mask"])
+    with c2tab2:
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
         mtable = st.selectbox('Select table:',list(set(final.loc[final['SCHEMA']==mschema]['TABLE NAME'])))
@@ -177,7 +177,7 @@ with tab1:
             cur.execute("alter table {}.{}.{} modify column {} set masking policy {};".format(DB,mschema,mtable,mcol,name))
         else:
           st.error('Data type doesnt match with the column', icon="🚨")           
-      with c2tab2:
+      with c2tab1:
         if sc_tb.shape[0]!=0 and alltags.shape[0]!=0:
           allpolicy_tab = pd.DataFrame(columns=['DATABASE','SCHEMA', 'TABLE_NAME', 'COLUMN_NAME','POLICY_NAME'])
           for i,row in sc_tb.iterrows():
@@ -189,9 +189,12 @@ with tab1:
           pschema = st.selectbox('Choose Schema:',list(set(allpolicy_tab['SCHEMA']))) 
           sch_poli = allpolicy_tab.loc[allpolicy_tab['SCHEMA']==pschema]
           policy = st.selectbox('Choose Masking Policy:',list(set(sch_poli['POLICY_NAME'])))
-          ed = st.radio('',['Edit Mask','Drop Mask'])
-          if ed=='Edit Mask':
-            pass
+          sc_tb_policy = sch_poli.loc[sch_poli['POLICY_NAME']==policy]
+          ed = st.radio('',['Remove Mask','Drop Mask'])
+          if ed=='Remove Mask':
+            for i,row in sc_tb_policy.iterrows():
+              Sc&tab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
+            
           else:
             pass
             #cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,<>,<>)
