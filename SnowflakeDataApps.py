@@ -190,7 +190,7 @@ with tab1:
           sch_poli = allpolicy_tab.loc[allpolicy_tab['SCHEMA']==pschema]
           policy = st.selectbox('Choose Masking Policy:',list(set(sch_poli['POLICY_NAME'])))
           sc_tb_policy = sch_poli.loc[sch_poli['POLICY_NAME']==policy]
-          if st.button('Remove Mask on columns',key=2):
+          if st.button('Remove Mask on columns'):
             removemaskon = []
             for i,row in sc_tb_policy.iterrows():
               sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
