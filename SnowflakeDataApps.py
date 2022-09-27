@@ -150,8 +150,8 @@ with tab2:
 ####col2---masking policy options####  
 with tab1:
   with col2:
-    st.write("masking policy options")
-    c2tab1,c2tab2 = st.tabs(["Create & Apply Mask","Edit Mask"])
+    st.write("Masking policy options")
+    c2tab1,c2tab2 = st.tabs(["Create & Apply Mask","Remove & Drop Mask"])
     with c2tab1:
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
@@ -169,7 +169,8 @@ with tab1:
         sroles = (str(roles)[1:-1])
         mdatatype = st.radio('Choose Datatype:',['String','Number'])
         if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
-          if st.button('Create and Apply Mask'):
+          st.button('Create & Apply Mask', key=1, on_click=create_mask())
+          def create_mask():
             cur.execute("Use database {};".format(DB))
             cur.execute("Use Schema {};".format(mschema))
             cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,mdatatype,mdatatype,sroles))
