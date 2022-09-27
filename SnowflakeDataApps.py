@@ -196,12 +196,12 @@ with tab1:
               sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
               if sctab==True:
                 removemaskon.append({'TABLE_NAME':row['TABLE_NAME'],'COLUMN_NAME':row['COLUMN_NAME']})
-            if st.button('Remove',key=3):
+            if st.button('Remove'):
               for x in removemaskon:
                 cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,x['TABLE_NAME'],x['COLUMN_NAME'])
-          if st.button("Remove & Drop Mask",key=4):
+          if st.button('Remove & Drop Mask'):
             st.warning('This option will Remove the mask on all columns it was applied and drop the mask', icon="⚠️")   
-            if st.button("Yes,Drop Mask",key=5):                
+            if st.button('Yes,Drop Mask'):                
               for i,row in sc_tb_policy.iterrows():     
                 cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,row['TABLE_NAME'],row['COLUMN_NAME'])
               cur.execute("Use database {};".format(DB))
