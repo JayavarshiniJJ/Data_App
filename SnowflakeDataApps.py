@@ -45,11 +45,12 @@ with tab1:
     if click =='All Schemas':
       pass
     else:
-      for x in list(sc['SCHEMA']):
-        schemas = st.checkbox('{}'.format(x),False)
-        if schemas==False:
-          sc = sc.loc[sc['SCHEMA']!=x]
-          sc_tb = sc_tb.loc[sc_tb['SCHEMA']!=x]
+      schemas = st.multiselect('',list(sc['SCHEMA']),key=5)
+      schemas = (str(schemas)[1:-1])
+      for n in list(sc['SCHEMA']):
+        if n not in schemas:
+          sc = sc.loc[sc['SCHEMA']!=n]
+          sc_tb = sc_tb.loc[sc_tb['SCHEMA']!=n] 
           
           
     if sc.shape[0]!=0:
@@ -64,9 +65,7 @@ with tab1:
           tables = (str(tables)[1:-1])
           for n in list(sc_tb['TABLE_NAME']):
             if n not in tables:
-              sc_tb = sc_tb.loc[sc_tb['TABLE_NAME']!=n] 
-    else:
-      st.error('Please select a schema', icon="🚨")           
+              sc_tb = sc_tb.loc[sc_tb['TABLE_NAME']!=n]         
             
 ####Classifying tables in schemas selected and applying tags on columns####
 @st.cache
