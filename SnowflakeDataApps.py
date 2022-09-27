@@ -37,7 +37,7 @@ sc_tb = pd.read_sql("select TABLE_SCHEMA AS SCHEMA,TABLE_NAME from {}.informatio
 tab1, tab2 = st.tabs(["Detailed view",  "overview"])
 ####col1--selecting schemas, classifying and if classified---removing the tags option####
 with tab1:
-  col1, col2 = st.columns([7,2])
+  col1, col2 = st.columns([6,2])
   with col1:
 ####selecting schemas####
     select = ['All Schemas','Select Schemas']
