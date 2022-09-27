@@ -50,18 +50,23 @@ with tab1:
         if schemas==False:
           sc = sc.loc[sc['SCHEMA']!=x]
           sc_tb = sc_tb.loc[sc_tb['SCHEMA']!=x]
-    
-    
-    if sc_tb.shape[0]!=0:     
-      click2 = st.radio('TABLES',['All Tables','Select Tables'],key=3,horizontal=True) 
-      if click2 =='All Tables':
-        pass
-      else:
-        tables = st.multiselect('',list(sc_tb['TABLE_NAME']),key=4)
-        tables = (str(tables)[1:-1])
-        for n in list(sc_tb['TABLE_NAME']):
-          if n not in tables:
-            sc_tb = sc_tb.loc[sc_tb['TABLE_NAME']!=n] 
+          
+          
+    if sc.shape[0]!=0:
+      if sc_tb.shape[0]==0:
+        st.info('No Tables under the schema', icon="ℹ️")
+      if sc_tb.shape[0]!=0:     
+        click2 = st.radio('TABLES',['All Tables','Select Tables'],key=3,horizontal=True) 
+        if click2 =='All Tables':
+          pass
+        else:
+          tables = st.multiselect('',list(sc_tb['TABLE_NAME']),key=4)
+          tables = (str(tables)[1:-1])
+          for n in list(sc_tb['TABLE_NAME']):
+            if n not in tables:
+              sc_tb = sc_tb.loc[sc_tb['TABLE_NAME']!=n] 
+    else:
+      st.error('Please select a schema', icon="🚨")           
             
 ####Classifying tables in schemas selected and applying tags on columns####
 @st.cache
@@ -100,10 +105,7 @@ with tab1:
           st.info('Please Select a Table', icon="ℹ️")
         else:
           st.info('No Tables under the schema', icon="ℹ️")
-    elif sc_tb.shape[0]!=0 and sc.shape[0]!=0:    
-        st.info('No Tables under the schema', icon="ℹ️")
-    else:
-      st.error('Please select a schema', icon="🚨") 
+  
 
       
       
