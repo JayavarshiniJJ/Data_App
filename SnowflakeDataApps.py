@@ -193,7 +193,7 @@ with tab1:
           ed = st.radio('',['Remove Mask','Drop Mask'])
           if ed=='Remove Mask':
             for i,row in sc_tb_policy.iterrows():
-              Sc&tab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
+              sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
             
           else:
             pass
