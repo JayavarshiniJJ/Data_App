@@ -151,7 +151,7 @@ with tab2:
 with tab1:
   with col2:
     st.write("Masking policy options")
-    c2tab2,c2tab1 = st.tabs(["Remove & Drop Mask","Create & Apply Mask"])
+    c2tab1,c2tab2 = st.tabs(["Remove & Drop Mask","Create & Apply Mask"])
     with c2tab2:
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
