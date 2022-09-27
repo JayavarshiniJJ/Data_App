@@ -57,7 +57,7 @@ with tab1:
       if sc_tb.shape[0]==0:
         st.info('No Tables under the schema', icon="ℹ️")
       if sc_tb.shape[0]!=0:     
-        click2 = st.radio('TABLES',['All Tables','Select Tables'],key=3,horizontal=True) 
+        click2 = st.radio('Choose Tables:',['All Tables','Select Tables'],key=3,horizontal=True) 
         if click2 =='All Tables':
           pass
         else:
