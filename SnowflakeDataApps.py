@@ -205,7 +205,7 @@ with tab1:
             st.warning('This option will Remove the mask on all columns it was applied and drop the mask', icon="⚠️")   
             if st.button('Yes,Drop Mask'):                
               for i,row in sc_tb_policy.iterrows():     
-                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,row['TABLE_NAME'],row['COLUMN_NAME'])
+                cur.execute("alter table {}.{}.{} modify column {} unset masking policy;".format(DB.pschema,row['TABLE_NAME'],row['COLUMN_NAME']))
               cur.execute("Use database {};".format(DB))
               cur.execute("Use Schema {};".format(pschema)) 
               cur.execute("Drop Masking Policy {};".format(policy))
