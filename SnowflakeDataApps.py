@@ -168,13 +168,13 @@ with tab1:
         roles = st.multiselect('Choose Roles that can see the data:',R)
         sroles = (str(roles)[1:-1])
         mdatatype = st.radio('Choose Datatype:',['String','Number'])
-        def create_mask():
+        
+        if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
+          if st.button('Create & Apply Mask'):
             cur.execute("Use database {};".format(DB))
             cur.execute("Use Schema {};".format(mschema))
             cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,mdatatype,mdatatype,sroles))
             cur.execute("alter table {}.{}.{} modify column {} set masking policy {};".format(DB,mschema,mtable,mcol,name))
-        if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
-          st.button('Create & Apply Mask', key=1, on_click=create_mask())       
         else:
           st.error('Data type doesnt match with the column', icon="🚨")           
       with c2tab2:
