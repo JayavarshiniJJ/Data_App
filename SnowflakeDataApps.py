@@ -188,8 +188,9 @@ with tab1:
           sch_poli = allpolicy_tab.loc[allpolicy_tab['SCHEMA']==pschema]
           policy = st.selectbox('Choose Masking Policy:',list(set(sch_poli['POLICY_NAME'])))
           sc_tb_policy = sch_poli.loc[sch_poli['POLICY_NAME']==policy]
-          removeoption = st.radio('',['Remove Mask on columns','Remove & Drop Mask'])
-          if removeoption=='Remove Mask on columns':
+          removeoption = st.radio('',['Remove Mask','Drop Mask'],horizontal=True)
+          if removeoption=='Remove Mask':
+            st.warning('This option will Remove the mask on all selected columns', icon="⚠️") 
             removemaskon = []
             for i,row in sc_tb_policy.iterrows():
               sctab = st.checkbox('{} in table {}'.format(row['COLUMN_NAME'],row['TABLE_NAME']),False)
