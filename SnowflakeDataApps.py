@@ -178,16 +178,8 @@ with tab1:
         cur.execute("show masking policies in SCHEMA {};".format(mschema))
         schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id()));",conn)
         applypolicy = st.selectbox('Select policy:',list(schemapolicies['name']))
-        policyinfo = pd.read_sql("select POLICY_SIGNATURE from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = {} and policy_schema = {} ;".format(DB,mschema),conn)
+        policyinfo = pd.read_sql("select POLICY_SIGNATURE from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = '{}' and policy_schema = '{}';".format(DB,mschema),conn)
         policyinfo
-        #name = st.text_input('Name of the mask:')
-        #roles_acc = pd.read_sql("select name from SNOWFLAKE.ACCOUNT_USAGE.ROLES where deleted_on is null;",conn)
-       # R = []
-       # for i, row in roles_acc.iterrows():
-         # R.append(row['NAME'])
-       # roles = st.multiselect('Choose Roles that can see the data:',R)
-       # sroles = (str(roles)[1:-1])
-       # mdatatype = st.radio('Choose Datatype:',['String','Number'])
         
         #if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
          # if st.button('Create & Apply Mask'):
