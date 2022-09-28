@@ -149,8 +149,8 @@ with tab2:
 with tab1:
   with col2:
     st.write("Masking policy options")
-    c2tab1,c2tab2,c2tab3 = st.tabs(["Remove & Drop","Create","Apply Mask"])
-    with c2tab2:
+    c2tab1,c2tab2,c2tab3 = st.tabs(["Remove & Drop","Create","Apply"])
+    with c2tab2: #create
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         cschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
         name = st.text_input('Name of the mask:')
@@ -165,7 +165,7 @@ with tab1:
           cur.execute("Use database {};".format(DB))
           cur.execute("Use Schema {};".format(cschema))
           cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,cdatatype,cdatatype,sroles))
-    with c2tab3:
+    with c2tab3: #Apply
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
         mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])),key=7)
         mtable = st.selectbox('Select table:',list(set(final.loc[final['SCHEMA']==mschema]['TABLE NAME'])),key=8)
@@ -178,7 +178,7 @@ with tab1:
         cur.execute("show masking policies in SCHEMA {};".format(mschema))
         schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id()));",conn)
         applypolicy = st.selectbox('Select policy:',list(schemapolicies['name']))
-        policyinfo = pd.read_sql("select POLICY_SIGNATURE() from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = {} and policy_schema = {} ;".format(DB,mschema),conn)
+        policyinfo = pd.read_sql("select POLICY_SIGNATURE from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = {} and policy_schema = {} ;".format(DB,mschema),conn)
         policyinfo
         #name = st.text_input('Name of the mask:')
         #roles_acc = pd.read_sql("select name from SNOWFLAKE.ACCOUNT_USAGE.ROLES where deleted_on is null;",conn)
