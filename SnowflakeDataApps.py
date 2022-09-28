@@ -183,7 +183,7 @@ with tab1:
         arg
         for x in arg:
           print(x)
-          
+            
           #for y in x['arguments']:
            # z =  y['datatype']
         #datat = (z['type'])
