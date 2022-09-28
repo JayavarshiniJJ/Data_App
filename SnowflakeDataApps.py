@@ -173,11 +173,12 @@ with tab1:
         mcol = st.selectbox('Select Column:',list(set(final2.loc[final2['TABLE NAME']==mtable]['COLUMN NAME'])),key=9)
         final3 = final2.loc[final2['TABLE NAME']==mtable]
         final4dt = final3.loc[final3['COLUMN NAME']==mcol]['DATA TYPE']
-        if st.checkbox("See Masks"):
-          cur.execute("Use database {};".format(DB))
-          cur.execute("show masking policies in SCHEMA {};".format(mschema))
-          schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id()));",conn)
-          schemapolicies
+        
+        cur.execute("Use database {};".format(DB))
+        cur.execute("show masking policies in SCHEMA {};".format(mschema))
+        schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id()));",conn)
+        schemapolicies['']
+        applypolicy = st.selectbox('Select policy:',list(schemapolicies['NAME']))
         #name = st.text_input('Name of the mask:')
         #roles_acc = pd.read_sql("select name from SNOWFLAKE.ACCOUNT_USAGE.ROLES where deleted_on is null;",conn)
        # R = []
