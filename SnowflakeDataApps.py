@@ -181,7 +181,7 @@ with tab1:
         policyinfo = pd.read_sql("select POLICY_SIGNATURE from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = '{}' and policy_schema = '{}';".format(DB,mschema),conn)
         pol_dict = list(policyinfo['POLICY_SIGNATURE'])
         pol_dict
-        for n in range(0,len(pol_dict):
+        for n in range(0,len(pol_dict)):
           print(n)
           
           #for y in x['arguments']:
