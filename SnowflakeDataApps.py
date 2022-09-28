@@ -179,11 +179,10 @@ with tab1:
         schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id()));",conn)
         applypolicy = st.selectbox('Select policy:',list(schemapolicies['name']))
         policyinfo = pd.read_sql("select POLICY_SIGNATURE from SNOWFLAKE.ACCOUNT_USAGE.MASKING_POLICIES where deleted is null and POLICY_CATALOG = '{}' and policy_schema = '{}';".format(DB,mschema),conn)
-        pol_dict = policyinfo.to_dict('series')
-        pol_dict_list =[]
+        pol_dict = list(policyinfo['POLICY_SIGNATURE']
         for x in pol_dict:
-          pol_dict_list.append(x)
-        pol_dict_list  
+          print(x)
+          
           #for y in x['arguments']:
            # z =  y['datatype']
         #datat = (z['type'])
