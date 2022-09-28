@@ -173,7 +173,8 @@ with tab1:
         mcol = st.selectbox('Select Column:',list(set(final2.loc[final2['TABLE NAME']==mtable]['COLUMN NAME'])),key=9)
         final3 = final2.loc[final2['TABLE NAME']==mtable]
         final4dt = final3.loc[final3['COLUMN NAME']==mcol]['DATA TYPE']
-        cur.execute("show masking policies in SCHEMA {};".format(mschema));
+        cur.execute("Use database {};".format(DB))
+        cur.execute("show masking policies in SCHEMA {};".format(mschema))
         schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id(1)));")
         schemapolicies[['POLICY_NAME']]
         #name = st.text_input('Name of the mask:')
