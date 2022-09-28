@@ -176,7 +176,7 @@ with tab1:
         cur.execute("Use database {};".format(DB))
         cur.execute("show masking policies in SCHEMA {};".format(mschema))
         schemapolicies = pd.read_sql("select * from table(result_scan(last_query_id(1)));",conn)
-        schemapolicies[['POLICY_NAME']]
+        schemapolicies
         #name = st.text_input('Name of the mask:')
         #roles_acc = pd.read_sql("select name from SNOWFLAKE.ACCOUNT_USAGE.ROLES where deleted_on is null;",conn)
        # R = []
