@@ -167,10 +167,10 @@ with tab1:
           cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,cdatatype,cdatatype,sroles))
     with c2tab3:
       if sc_tb.shape[0]!=0 and alltags.shape[0]!=0: 
-        mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])))
-        mtable = st.selectbox('Select table:',list(set(final.loc[final['SCHEMA']==mschema]['TABLE NAME'])))
+        mschema = st.selectbox('Select schema:',list(set(final['SCHEMA'])),key=7)
+        mtable = st.selectbox('Select table:',list(set(final.loc[final['SCHEMA']==mschema]['TABLE NAME'])),key=8)
         final2 = final.loc[final['SCHEMA']==mschema]
-        mcol = st.selectbox('Select Column:',list(set(final2.loc[final2['TABLE NAME']==mtable]['COLUMN NAME'])))
+        mcol = st.selectbox('Select Column:',list(set(final2.loc[final2['TABLE NAME']==mtable]['COLUMN NAME'])),key=9)
         final3 = final2.loc[final2['TABLE NAME']==mtable]
         final4dt = final3.loc[final3['COLUMN NAME']==mcol]['DATA TYPE']
         cur.execute("show masking policies in SCHEMA {};".format(mschema));
