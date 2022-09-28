@@ -186,14 +186,14 @@ with tab1:
        # sroles = (str(roles)[1:-1])
        # mdatatype = st.radio('Choose Datatype:',['String','Number'])
         
-        if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
-          if st.button('Create & Apply Mask'):
-            cur.execute("Use database {};".format(DB))
-            cur.execute("Use Schema {};".format(mschema))
-            cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,mdatatype,mdatatype,sroles))
-            cur.execute("alter table {}.{}.{} modify column {} set masking policy {};".format(DB,mschema,mtable,mcol,name))
-        else:
-          st.error('Data type doesnt match with the column', icon="🚨")           
+        #if (mdatatype=='String' and str(final4dt).split()[1]=='TEXT') or (mdatatype =='Number' and str(final4dt).split()[1]=='NUMBER'):
+         # if st.button('Create & Apply Mask'):
+          #  cur.execute("Use database {};".format(DB))
+           # cur.execute("Use Schema {};".format(mschema))
+            #cur.execute("Create masking policy {} as (val {}) returns {} -> case when current_role() in ({}) then val else '*********' end;".format(name,mdatatype,mdatatype,sroles))
+            #cur.execute("alter table {}.{}.{} modify column {} set masking policy {};".format(DB,mschema,mtable,mcol,name))
+        #else:
+         # st.error('Data type doesnt match with the column', icon="🚨")           
       with c2tab1:
         if sc_tb.shape[0]!=0 and alltags.shape[0]!=0:
           allpolicy_tab = pd.DataFrame(columns=['DATABASE','SCHEMA', 'TABLE_NAME', 'COLUMN_NAME','POLICY_NAME'])
